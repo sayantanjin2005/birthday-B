@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Archivo:ital,wght@0,100..900;1,100..900&family=Bilbo+Swash+Caps&family=Inter:opsz,wght@14..32,500&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html,
+  body {
+    height: 100%;
+    /* for touch screen */
+    touch-action: none; 
+  }
+  
+body {
+    overflow: hidden;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-family: "Pacifico", sans-serif;
+    background: #21071e;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+  
+  #drag-container, #spin-container {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: auto;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+    -webkit-transform: rotateX(-10deg);
+            transform: rotateX(-10deg);
+            z-index: 100;
+  }
+#drag-container img, #drag-container video {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    position: absolute;
+    left: 0;
+    object-fit: cover;
+    width: 86px;
+    height: 124px;
+    background-position: center;
+    background-position-y: 93px;
+    background-size: cover;
+    top: 0;
+    /* max-width: 120%; */
+    /* max-height: 120%; */
+    line-height: 200px;
+    font-size: 50px;
+    text-align: center;
+    -webkit-box-shadow: 0 0 8px #fff;
+    box-shadow: 0 0 8px #fff;
+    -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0005);
+    /* border-radius: 56px; */
+    border: 4px solid #fff;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: rgba(188, 188, 188, 0) 1px 4px 7px, rgba(204, 204, 204, 0.064) 1px 3px 6px;
+        animation: delayShadow 1s forwards;  /* run animation */
+    animation-delay: 2s;   
+}
+
+@keyframes delayShadow {
+  to {
+box-shadow: rgb(0 0 0 / 0%) 1px 4px 7px, rgb(0 0 0 / 27%) 1px 3px 6px;
+  }
+}
+  #drag-container img:hover, #drag-container video:hover {
+    -webkit-box-shadow: 0 0 15px #fffd;
+            box-shadow: 0 0 15px #fffd;
+    -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0007);
+      box-shadow: rgba(0, 0, 0, 0.17) 1px 4px 7px, rgba(0, 0, 0, 0.24) 1px 3px 6px;
+  }
+  
+#drag-container p {
+    line-height: 116px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%) rotateX(90deg);
+    transform: translate(-50%,-50%) rotateX(90deg);
+    color: rgb(255 254 254);
+    animation: fadein ease 15s;
+}
+
+  @keyframes fadein {
+      from {
+          opacity:0;
+          
+      }
+      to {
+          opacity: 1;
+          
+      }
+  }
+.button {
+    height: 121px;
+    width: 160px;
+    padding: 10px 30px;
+    background: url('./images/Message.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    /* Fixed position so it is ALWAYS on top, never inside 3D transform context */
+    position: fixed;
+    bottom: 32px;
+    right: 36px;
+    z-index: 9999;
+    opacity: 0;
+    animation: showUp 1s forwards;
+    animation-delay: 2s;
+    transition: transform .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 12px #ff69b4cc);
+}
+
+@keyframes showUp {
+  to {
+    opacity: 1;   /* element visible */
+  }
+}
+  
+  #ground {
+    width: 900px;
+    height: 900px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%) rotateX(90deg);
+            transform: translate(-50%,-50%) rotateX(90deg);
+    background: -webkit-radial-gradient(center center, farthest-side , #9993, transparent);
+  }
+  
+  #music-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  
+  @-webkit-keyframes spin {
+    from{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    } to{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    from{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    } to{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    }
+  }
+  @-webkit-keyframes spinRevert {
+    from{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    } to{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    }
+  }
+  @keyframes spinRevert {
+    from{
+      -webkit-transform: rotateY(360deg);
+              transform: rotateY(360deg);
+    } to{
+      -webkit-transform: rotateY(0deg);
+              transform: rotateY(0deg);
+    }
+  }
+
+  #canvas {
+    background-color:transparent;   
+    color: transparent; 
+    margin: 0;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 100vw;
+  }
+
+
+#canva {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    overflow: hidden;
+}
+
+p {
+    font-weight: 600;
+    font-size: 4vw;
+    text-align: center;
+    
+}
+
+@media screen and (max-width: 658px)    {
+  p {
+    font-weight: 600;
+    font-size: 12vw;
+    text-align: center;
+}
+}
+
+/* === Gift Box Special Styling === */
+#drag-container img.gift-box-img {
+  object-fit: contain;
+  background: linear-gradient(135deg, #ffe0f0, #fff0fa);
+  border: 4px solid #ff69b4;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #ff69b488, 0 0 40px #ff1493aa;
+  animation: giftBounce 1.4s ease-in-out infinite, delayShadow 1s forwards;
+  animation-delay: 0s, 2s;
+  cursor: pointer;
+}
+
+#drag-container img.gift-box-img:hover {
+  box-shadow: 0 0 30px #ff1493cc, 0 0 60px #ff69b4cc;
+  transform: scale(1.08);
+}
+
+@keyframes giftBounce {
+  0%, 100% { transform: translateY(0px) rotateZ(0deg); }
+  25%       { transform: translateY(-8px) rotateZ(-3deg); }
+  75%       { transform: translateY(-4px) rotateZ(3deg); }
+}
+
+/* === Gift Modal Styling === */
+.gift-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 5, 25, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.gift-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gift-modal-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 230, 245, 0.95), rgba(255, 255, 255, 0.98));
+  border: 2px solid #ff69b4;
+  border-radius: 28px;
+  padding: 35px 30px 30px;
+  max-width: 420px;
+  width: 85%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(255, 20, 147, 0.4), 0 0 30px rgba(255, 105, 180, 0.6);
+  transform: scale(0.7) translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: #21071e;
+  font-family: 'Poppins', sans-serif;
+}
+
+.gift-modal-overlay.active .gift-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.gift-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #ff1493;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.gift-modal-close:hover {
+  transform: scale(1.2) rotate(90deg);
+}
+
+.gift-modal-icon img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 8px 16px rgba(255, 20, 147, 0.4));
+  animation: giftIconFloat 2s ease-in-out infinite;
+}
+
+@keyframes giftIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.gift-modal-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 24px;
+  color: #ff1493;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+}
+
+.gift-modal-message {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4a154b;
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+
+.gift-modal-btn {
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+  transition: all 0.3s ease;
+}
+
+.gift-modal-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(255, 20, 147, 0.6);
+}
+
+/* Custom Message Modal Card styling */
+.message-card {
+  background: linear-gradient(135deg, rgba(255, 240, 250, 0.96), rgba(255, 225, 240, 0.98));
+  border: 2px solid #ff1493;
+}
+
+.message-modal-icon img {
+  width: 140px;
+  height: 75px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 6px 14px rgba(255, 20, 147, 0.35));
+  animation: giftIconFloat 2.5s ease-in-out infinite;
+}
+
+.message-btn {
+  background: linear-gradient(135deg, #ff1493, #e60073);
+}
